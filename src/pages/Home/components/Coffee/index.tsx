@@ -1,5 +1,6 @@
 import { Minus, Plus, ShoppingCart } from 'phosphor-react';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import slug from 'slug';
 import { useShop } from '../../../../hooks/useShop';
 import { CoffeeContainer, TagContainer } from './styles';
@@ -30,6 +31,23 @@ export const Coffee = ({ data }: CoffeeProps) => {
     style: 'currency',
     currency: 'BRL',
   });
+
+  function handleAddToCart() {
+    if (amount) {
+      addToCart({
+        id: data.id,
+        amount,
+      });
+      toast(
+        `☕ ${
+          amount > 1 ? 'Cafés adicionados' : 'Café adicionado'
+        }  ao carrinho!`,
+        {
+          autoClose: 1500,
+        }
+      );
+    }
+  }
 
   return (
     <CoffeeContainer>
@@ -70,13 +88,7 @@ export const Coffee = ({ data }: CoffeeProps) => {
               />
             </button>
           </div>
-          <button
-            onClick={() =>
-              addToCart({
-                id: data.id,
-                amount,
-              })
-            }>
+          <button onClick={handleAddToCart}>
             <ShoppingCart
               weight="fill"
               size={24}

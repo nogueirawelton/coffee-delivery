@@ -1,6 +1,11 @@
 import { createContext, ReactNode, useContext, useReducer } from 'react';
-import { AddToCartAction } from '../reducers/cart/actions';
-import { CartItem, cartReducer, Coffee } from '../reducers/cart/reducer';
+import { AddToCartAction, SetUfAction } from '../reducers/shop/actions';
+import {
+  CartItem,
+  Coffee,
+  Payment,
+  shopReducer,
+} from '../reducers/shop/reducer';
 
 interface ShopContextProps {
   children: ReactNode;
@@ -9,7 +14,9 @@ interface ShopContextProps {
 interface ShopContextData {
   coffees: Coffee[];
   cart: CartItem[];
+  payment: Payment;
   addToCart: (cartItem: CartItem) => void;
+  setUf: (uf: string) => void;
 }
 
 const coffees = [
@@ -120,18 +127,26 @@ const coffees = [
 const shopContext = createContext({} as ShopContextData);
 
 export const ShopProvider = ({ children }: ShopContextProps) => {
-  const [cartState, dispatch] = useReducer(cartReducer, {
+  const [shopState, dispatch] = useReducer(shopReducer, {
     cart: [],
+    payment: {
+      address: {},
+      method: 'credit',
+    } as Payment,
   });
 
-  const { cart } = cartState;
+  const { cart, payment } = shopState;
 
   function addToCart(cartItem: CartItem) {
     dispatch(AddToCartAction(cartItem));
   }
 
+  function setUf(uf: string) {
+    dispatch(SetUfAction(uf));
+  }
+
   return (
-    <shopContext.Provider value={{ coffees, cart, addToCart }}>
+    <shopContext.Provider value={{ coffees, cart, payment, addToCart, setUf }}>
       {children}
     </shopContext.Provider>
   );

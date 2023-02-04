@@ -1,4 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from 'styled-components';
 import { ShopProvider } from './hooks/useShop';
 import { Router } from './Router';

@@ -57,6 +57,11 @@ export const CoffeeContainer = styled.div`
         align-items: center;
         justify-content: center;
         border-radius: 6px;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background: ${(props) => props.theme['purple-500']};
+        }
       }
 
       & > div {

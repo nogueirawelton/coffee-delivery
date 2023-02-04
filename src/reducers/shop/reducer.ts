@@ -14,11 +14,26 @@ export interface CartItem {
   amount: number;
 }
 
-interface CartState {
-  cart: CartItem[];
+interface Address {
+  cep: string;
+  street: string;
+  number: string;
+  complement?: string;
+  district: string;
+  uf: string;
 }
 
-export function cartReducer(state: CartState, action: any) {
+export interface Payment {
+  address: Address;
+  method: 'credit' | `debit` | `money`;
+}
+
+interface ShopState {
+  cart: CartItem[];
+  payment: Payment;
+}
+
+export function shopReducer(state: ShopState, action: any) {
   switch (action.type) {
     case ActionTypes.ADD_TO_CART: {
       return produce(state, (draft) => {
@@ -31,6 +46,11 @@ export function cartReducer(state: CartState, action: any) {
         } else {
           draft.cart[cartItemExists].amount = action.payload.cartItem.amount;
         }
+      });
+    }
+    case ActionTypes.SET_UF: {
+      return produce(state, (draft) => {
+        draft.payment.address.uf = action.payload.uf;
       });
     }
     default:

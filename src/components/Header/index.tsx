@@ -20,8 +20,8 @@ interface State {
 
 export const Header = () => {
   const [states, setStates] = useState<State[]>([]);
-  const { cart } = useShop();
-  
+  const { cart, payment, setUf } = useShop();
+
   useEffect(() => {
     fetch(
       'https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome'
@@ -29,6 +29,17 @@ export const Header = () => {
       .then((response) => response.json())
       .then((data) => setStates(data));
   }, []);
+
+  const { address } = payment;
+
+  function convertIdToUf(id: string) {
+    const uf = states.find((state) => state.id == +id)?.sigla ?? '';
+    setUf(uf);
+  }
+
+  const activeValue = address.uf
+    ? String(states.find((state) => state.sigla == address.uf)?.id)
+    : '';
 
   return (
     <HeaderContainer>
@@ -41,19 +52,26 @@ export const Header = () => {
         </NavLink>
 
         <nav>
-          <Select.Root>
+          <Select.Root
+            value={activeValue}
+            onValueChange={convertIdToUf}>
             <StyledTrigger>
               <MapPin
                 weight="fill"
                 color="#8047F8"
                 size={24}
               />
-              <Select.Value placeholder="Estado, UF" />
+              <Select.Value />
             </StyledTrigger>
             <Select.Portal>
               <StyledContent>
                 <Select.Viewport>
                   <Select.Group>
+                    <StyledItem
+                      value=""
+                      hidden>
+                      <Select.ItemText>Estado, UF</Select.ItemText>
+                    </StyledItem>
                     {states.length &&
                       states.map((state) => (
                         <StyledItem
@@ -77,7 +95,7 @@ export const Header = () => {
                 color="#C47F17"
               />
             </NavLink>
-            <span>{cart.length}</span>
+            {!!cart.length && <span>{cart.length}</span>}
           </CartButton>
         </nav>
       </div>
