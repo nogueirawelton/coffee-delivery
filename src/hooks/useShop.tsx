@@ -1,6 +1,13 @@
 import { createContext, ReactNode, useContext, useReducer } from 'react';
-import { AddToCartAction, SetUfAction } from '../reducers/shop/actions';
 import {
+  AddToCartAction,
+  EditItemAction,
+  SetAddressAction,
+  SetPaymentMethodAction,
+  SetUfAction,
+} from '../reducers/shop/actions';
+import {
+  Address,
   CartItem,
   Coffee,
   Payment,
@@ -17,6 +24,9 @@ interface ShopContextData {
   payment: Payment;
   addToCart: (cartItem: CartItem) => void;
   setUf: (uf: string) => void;
+  setPaymentMethod: (paymentMethod: string) => void;
+  setAddress: (address: Address) => void;
+  editItem: (id: number, modify: 'add' | 'remove' | 'delete') => void;
 }
 
 const coffees = [
@@ -130,8 +140,16 @@ export const ShopProvider = ({ children }: ShopContextProps) => {
   const [shopState, dispatch] = useReducer(shopReducer, {
     cart: [],
     payment: {
-      address: {},
-      method: 'credit',
+      address: {
+        cep: '',
+        street: '',
+        number: '',
+        complement: '',
+        district: '',
+        city: '',
+        uf: '',
+      },
+      method: '',
     } as Payment,
   });
 
@@ -145,8 +163,30 @@ export const ShopProvider = ({ children }: ShopContextProps) => {
     dispatch(SetUfAction(uf));
   }
 
+  function setPaymentMethod(paymentMethod: string) {
+    dispatch(SetPaymentMethodAction(paymentMethod));
+  }
+
+  function setAddress(address: Address) {
+    dispatch(SetAddressAction(address));
+  }
+
+  function editItem(id: number, modify: 'add' | 'remove' | 'delete') {
+    dispatch(EditItemAction(id, modify));
+  }
+
   return (
-    <shopContext.Provider value={{ coffees, cart, payment, addToCart, setUf }}>
+    <shopContext.Provider
+      value={{
+        coffees,
+        cart,
+        payment,
+        addToCart,
+        setUf,
+        setPaymentMethod,
+        setAddress,
+        editItem,
+      }}>
       {children}
     </shopContext.Provider>
   );

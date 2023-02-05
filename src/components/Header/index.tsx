@@ -67,9 +67,7 @@ export const Header = () => {
               <StyledContent>
                 <Select.Viewport>
                   <Select.Group>
-                    <StyledItem
-                      value=""
-                      hidden>
+                    <StyledItem value="">
                       <Select.ItemText>Estado, UF</Select.ItemText>
                     </StyledItem>
                     {states.length &&

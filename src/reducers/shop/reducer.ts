@@ -14,18 +14,19 @@ export interface CartItem {
   amount: number;
 }
 
-interface Address {
+export interface Address {
   cep: string;
   street: string;
   number: string;
   complement?: string;
   district: string;
+  city: string;
   uf: string;
 }
 
 export interface Payment {
   address: Address;
-  method: 'credit' | `debit` | `money`;
+  method: 'credit' | 'debit' | 'money' | '';
 }
 
 interface ShopState {
@@ -51,6 +52,38 @@ export function shopReducer(state: ShopState, action: any) {
     case ActionTypes.SET_UF: {
       return produce(state, (draft) => {
         draft.payment.address.uf = action.payload.uf;
+      });
+    }
+    case ActionTypes.SET_PAYMENT_METHOD: {
+      return produce(state, (draft) => {
+        draft.payment.method = action.payload.paymentMethod;
+      });
+    }
+    case ActionTypes.SET_ADDRESS: {
+      return produce(state, (draft) => {
+        draft.payment.address = action.payload.address;
+      });
+    }
+    case ActionTypes.EDIT_ITEM: {
+      return produce(state, (draft) => {
+        const cartItemIndex = state.cart.findIndex(
+          (item) => item.id == action.payload.id
+        );
+
+        switch (action.payload.modify) {
+          case 'add': {
+            draft.cart[cartItemIndex].amount++;
+            return;
+          }
+          case 'remove': {
+            draft.cart[cartItemIndex].amount--;
+          }
+          case 'delete': {
+            draft.cart.splice(cartItemIndex, 1);
+          }
+          default:
+            return;
+        }
       });
     }
     default:

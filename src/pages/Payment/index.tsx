@@ -1,70 +1,51 @@
-import { MapPinLine } from 'phosphor-react';
+import { NavLink } from 'react-router-dom';
 import { useShop } from '../../hooks/useShop';
+import { Address } from './components/Address';
+import { CartItem } from './components/CartItem';
+import { PaymentData } from './components/PaymentData';
+
 import {
   AddressContainer,
-  AddressInputs,
-  AddressTitle,
-  DataContainer,
   OrderContainer,
   PaymentContainer,
   PaymentMethodContainer,
 } from './styles';
 
 export const Payment = () => {
-  const { payment, setUf } = useShop();
+  const { cart } = useShop();
+
   return (
     <main>
       <PaymentContainer>
-        <DataContainer>
+        <div>
           <AddressContainer>
             <h2>Complete seu pedido</h2>
-            <AddressTitle>
-              <MapPinLine
-                size={24}
-                color="#C47F17"
-              />
-              <div>
-                <strong>Endereço de Entrega</strong>
-                <p>Informe o endereço onde deseja receber seu pedido</p>
-              </div>
-            </AddressTitle>
-            <AddressInputs>
-              <input
-                type="text"
-                placeholder="CEP"
-              />
-              <input
-                type="text"
-                placeholder="Rua"
-              />
-              <input
-                type="text"
-                placeholder="Número"
-              />
-              <input
-                type="text"
-                placeholder="Complemento"
-              />
-              <input
-                type="text"
-                placeholder="Bairro"
-              />
-              <input
-                type="text"
-                placeholder="Cidade"
-              />
-              <input
-                type="text"
-                value={payment.address.uf}
-                onChange={(e) => setUf(e.target.value.toUpperCase())}
-                placeholder="UF"
-              />
-            </AddressInputs>
+            <Address />
           </AddressContainer>
-          <PaymentMethodContainer></PaymentMethodContainer>
-        </DataContainer>
+          <PaymentMethodContainer>
+            <PaymentData />
+          </PaymentMethodContainer>
+        </div>
         <OrderContainer>
           <h2>Cafés Selecionados</h2>
+          <div>
+            {cart.length ? (
+              <div>
+                {cart.map(({ id, amount }) => (
+                  <CartItem
+                    key={id}
+                    id={id}
+                    amount={amount}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div>
+                <p>Nenhum café adicionado ainda :(</p>
+                <NavLink to="/">Ir às compras</NavLink>
+              </div>
+            )}
+          </div>
         </OrderContainer>
       </PaymentContainer>
     </main>
