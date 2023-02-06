@@ -78,6 +78,7 @@ export const CoffeesContainer = styled.section`
   max-width: 1600px;
   margin-inline: auto;
   padding-inline: 1.5rem;
+  padding-bottom: 5rem;
 
   @media (min-width: 550px) {
     padding-inline: 5rem;

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import slug from 'slug';
 import { useShop } from '../../../../hooks/useShop';
+import { BrlFormatter } from '../../../../utils/BlrPriceFormatter';
 import { CoffeeContainer, TagContainer } from './styles';
 interface Coffee {
   id: number;
@@ -26,11 +27,6 @@ export const Coffee = ({ data }: CoffeeProps) => {
   import(`../../../../assets/${slug(data.name)}.png`).then((image) =>
     setImage(image.default)
   );
-
-  const BrlFormatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  });
 
   function handleAddToCart() {
     if (amount) {

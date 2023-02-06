@@ -1,7 +1,7 @@
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useShop } from '../../hooks/useShop';
 import { Address } from './components/Address';
-import { CartItem } from './components/CartItem';
+import { CartData } from './components/CartData';
 import { PaymentData } from './components/PaymentData';
 
 import {
@@ -12,11 +12,31 @@ import {
 } from './styles';
 
 export const Payment = () => {
-  const { cart } = useShop();
+  const { setAddress, clearCart } = useShop();
+  const navigate = useNavigate();
+
+  function handleConfirmOrder(e: any) {
+    e.preventDefault();
+
+    const { cep, street, number, complement, district, city, uf } = e.target;
+
+    setAddress({
+      cep: cep.value,
+      street: street.value,
+      number: number.value,
+      complement: complement.value,
+      district: district.value,
+      city: city.value,
+      uf: uf.value,
+    });
+
+    clearCart();
+    navigate('/confirmed-order');
+  }
 
   return (
     <main>
-      <PaymentContainer>
+      <PaymentContainer onSubmit={handleConfirmOrder}>
         <div>
           <AddressContainer>
             <h2>Complete seu pedido</h2>
@@ -28,24 +48,7 @@ export const Payment = () => {
         </div>
         <OrderContainer>
           <h2>Cafés Selecionados</h2>
-          <div>
-            {cart.length ? (
-              <div>
-                {cart.map(({ id, amount }) => (
-                  <CartItem
-                    key={id}
-                    id={id}
-                    amount={amount}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div>
-                <p>Nenhum café adicionado ainda :(</p>
-                <NavLink to="/">Ir às compras</NavLink>
-              </div>
-            )}
-          </div>
+          <CartData />
         </OrderContainer>
       </PaymentContainer>
     </main>

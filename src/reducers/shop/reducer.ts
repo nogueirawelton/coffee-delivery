@@ -26,7 +26,7 @@ export interface Address {
 
 export interface Payment {
   address: Address;
-  method: 'credit' | 'debit' | 'money' | '';
+  method: 'credit' | 'debit' | 'money';
 }
 
 interface ShopState {
@@ -84,6 +84,11 @@ export function shopReducer(state: ShopState, action: any) {
           default:
             return;
         }
+      });
+    }
+    case ActionTypes.CLEAR_CART: {
+      return produce(state, (draft) => {
+        draft.cart = [];
       });
     }
     default:

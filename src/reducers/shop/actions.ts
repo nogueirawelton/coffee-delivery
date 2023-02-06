@@ -6,6 +6,7 @@ export enum ActionTypes {
   SET_PAYMENT_METHOD = 'SET_PAYMENT_METHOD',
   SET_ADDRESS = 'SET_ADDRESS',
   EDIT_ITEM = 'EDIT_ITEM',
+  CLEAR_CART = 'CLEAR_CART',
 }
 
 export function AddToCartAction(cartItem: CartItem) {
@@ -54,5 +55,11 @@ export function EditItemAction(
       id,
       modify,
     },
+  };
+}
+
+export function ClearCartAction() {
+  return {
+    type: ActionTypes.CLEAR_CART,
   };
 }

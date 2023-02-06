@@ -2,6 +2,7 @@ import { Minus, Plus, Trash } from 'phosphor-react';
 import { useState } from 'react';
 import slug from 'slug';
 import { useShop } from '../../../../hooks/useShop';
+import { BrlFormatter } from '../../../../utils/BlrPriceFormatter';
 import { CartItemContainer } from './styles';
 
 interface CartItem {
@@ -14,11 +15,6 @@ export const CartItem = ({ id, amount }: CartItem) => {
   const [image, setImage] = useState('');
 
   const coffee = coffees.find((coffee) => coffee.id == id);
-
-  const BrlFormatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  });
 
   if (coffee) {
     import(`../../../../assets/${slug(coffee.name)}.png`).then((image) =>
