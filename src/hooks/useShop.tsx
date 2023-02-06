@@ -86,7 +86,7 @@ const coffees = [
     name: 'Capuccino',
     description:
       'Bebida com canela feita de doses iguais de café, leite e espuma',
-    price: 10.3,
+    price: 4.5,
     tags: ['Tradicional', 'Com Leite'],
   },
   {
@@ -94,21 +94,21 @@ const coffees = [
     name: 'Macchiato',
     description:
       'Café expresso misturado com um pouco de leite quente e espuma',
-    price: 10.9,
+    price: 8.9,
     tags: ['Tradicional', 'Com Leite'],
   },
   {
     id: 9,
     name: 'Mocaccino',
     description: 'Café expresso com calda de chocolate, pouco leite e espuma',
-    price: 10.9,
+    price: 4.9,
     tags: ['Tradicional', 'Com Leite'],
   },
   {
     id: 10,
     name: 'Chocolate Quente',
     description: 'Bebida feita com chocolate dissolvido no leite quente e café',
-    price: 11.20,
+    price: 6.20,
     tags: ['Especial', 'Com Leite'],
   },
   {
@@ -116,28 +116,28 @@ const coffees = [
     name: 'Cubano',
     description:
       'Drink gelado de café expresso com rum, creme de leite e hortelã',
-    price: 11.5,
+    price: 5.5,
     tags: ['Especial', 'Alcoólico', 'Gelado'],
   },
   {
     id: 12,
     name: 'Havaiano',
     description: 'Bebida adocicada preparada com café e leite de coco',
-    price: 11.5,
+    price: 9.5,
     tags: ['Especial'],
   },
   {
     id: 13,
     name: 'Árabe',
     description: 'Bebida preparada com grãos de café árabe e especiarias',
-    price: 13.9,
+    price: 3.9,
     tags: ['Especial'],
   },
   {
     id: 14,
     name: 'Irlandês',
     description: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
-    price: 17.43,
+    price: 7.43,
     tags: ['Especial', 'Alcoólico'],
   },
 ];
